@@ -70,7 +70,28 @@ Support for modularity, niche targetability, ease of portability to other domain
 No. The Pilot monitors the current path segment; a reached waypoint advances navigation, while an obstruction can return control to the Navigator. The entire mission need not be recomputed.\par\end{samepage}
 
 \begin{samepage}\textbf{21. Is active perception the same as an active sensor?}\\
-No. Active perception changes an action to obtain better information. Whether the sensor hardware is active or passive is a separate classification that requires the later sensing material.\par\end{samepage}
+No. Active perception changes an action to obtain better information. Whether the sensor hardware is active or passive is a separate classification (later sensing lessons).\par\end{samepage}
+
+\begin{samepage}\textbf{22. Define SENSE, PLAN and ACT by their inputs and outputs.}\\
+SENSE: sensor data $\rightarrow$ sensed information. PLAN: sensed and/or cognitive information $\rightarrow$ directives. ACT: sensed information or directives $\rightarrow$ actuator commands.\par\end{samepage}
+
+\begin{samepage}\textbf{23. Describe the three paradigms by primitives and sensing organization.}\\
+Hierarchical: S, P, A with sensing fused into a global world model. Reactive: concurrent S--A behaviors with local, behavior-specific sensing. Hybrid: P, S--A; sensing routed to behaviors and also to the planner's task-oriented world model.\par\end{samepage}
+
+\begin{samepage}\textbf{24. Classical AI paradigm versus intelligent robotics paradigm?}\\
+Classical AI reasons over an abstract, fully specified problem (chess) in a one-way perceive--reason--act chain. Intelligent robotics closes the loop through the real, partially known environment; autonomous behavior emerges from continuous perception--action interaction.\par\end{samepage}
+
+\begin{samepage}\textbf{25. Why does robotics say ``self-governing'' without meaning moral independence?}\\
+The term comes from the mechanical tradition (Watt's steam-engine governor): a machine regulating itself toward a goal. The dictionary sense of moral independence feeds the myth of evil robots; bounded rationality further limits any agent.\par\end{samepage}
+
+\begin{samepage}\textbf{26. Give the four automation/autonomy keyword pairs of S04.}\\
+Plans: execution vs generation. Actions: deterministic vs non-deterministic. Models: closed world vs open world. Knowledge representation: signals vs symbols. Automation is about tools, autonomy about agents.\par\end{samepage}
+
+\begin{samepage}\textbf{27. Give two advantages and two disadvantages of the Hierarchical Paradigm.}\\
+Advantages: a clear ordering of sensing, planning and acting; explicit goal reasoning (and a path from semi-autonomous to autonomous control). Disadvantages: the planning bottleneck on a global world model (frame problem, CWA); sensing and acting always disconnected, so no stimulus--response; uncertainty poorly handled.\par\end{samepage}
+
+\begin{samepage}\textbf{28. Evaluate NHC/RCS with the four criteria.}\\
+Modularity: intuitive but only functional decomposition. Niche targetability: reasonable (navigation; RCS on mining, submarines, cars). Portability: unclear, specified too broadly. Robustness: limited, via RCS plan simulation, at the price of delay.\par\end{samepage}
 
 \subsection{One scenario across the whole course}
 \textbf{Task:} a robot brings a component to a worker, but someone leaves a trolley in the corridor.

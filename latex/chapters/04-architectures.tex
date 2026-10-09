@@ -1,9 +1,25 @@
 \section{Organizing intelligence: robot paradigms and architectures}
-\sources{S04, PDF pp. 19--30; S02, PDF pp. 24--32; Murphy, printed pp. 2--11, 42--43, 54--62 and 83--91.}
+\sources{S04, PDF pp. 19--30; S02, PDF pp. 24--32; Murphy, printed pp. 5--12, 42--43, 54--63 and 83--91.}
 \subsection{Paradigm versus architecture}
-A \term{paradigm} describes how SENSE, PLAN and ACT relate and how sensing is organized. An \term{architecture} implements those principles through concrete components, interfaces and control flows. The same paradigm can have several architectures.
+A \term{paradigm} is a philosophy or set of assumptions and/or techniques characterizing an approach to a class of problems (Murphy's analogy: Cartesian versus polar coordinates for the same calculus problem). Robotic paradigms are described in two ways: (1) by the \emph{relationship among SENSE, PLAN and ACT}, using the input/output table of Section~1, and (2) by the \emph{sensing organization}, i.e.\ whether sensor data is processed locally for each function or first fused into one global world model. An \term{architecture} provides a principled way of organizing a control system and describes a set of components and how they interact; it also imposes constraints on how the problem is solved. The same paradigm can have several architectures, as one engine type has many car models.
 
-The brain diagrams in S04 are organizing analogies: goal-oriented deliberation is contrasted with fast reflex-like responses, with an interface between them. They do not establish that the software has human consciousness or exactly reproduces neuroanatomy.
+\par\smallskip\begin{tabularx}{\linewidth}{@{}L{30mm}L{30mm}Y@{}}
+\toprule
+Paradigm & Period (Murphy) & Why it appeared \\
+\midrule
+Hierarchical & 1967--1990 (from Shakey) & Introspective view of human thinking: see, decide, plot a course. \\
+Reactive & heavily used 1988--1992 & Interest in biology and cognitive psychology; cheap, more powerful hardware (insect-like robots for under \$500 versus the very costly Shakey). \\
+Hybrid & 1990s to today & Throwing out planning was too extreme for general-purpose robots; keep reactive speed and add deliberation. \\
+\bottomrule
+\end{tabularx}\par\smallskip
+
+\textbf{The two loops of S04 (pp.~20--27).} The slides organize intelligence with a brain analogy:
+\begin{itemize}
+\item \term{Loop 1, deliberative} (``upper brain'' or cortex): thoughtful, conscious reasoning over symbols about goals --- planning, optimization, situation awareness. This is the \emph{hierarchical architecture}.
+\item \term{Loop 2, reflexive/reactive} (spinal cord and ``lower brain''): skills and responses, unconscious; ``smart as a cockroach, fish, bird, armadillo''. This is the \emph{reactive architecture}.
+\item A ``middle brain'' converts sensor data into symbols. Together these give the \term{deliberative layer}, the \term{reactive (or behavioural) layer} and the \term{interfacing layer} between them.
+\end{itemize}
+The analogy organizes functions; it does not claim the software reproduces neuroanatomy.
 
 \subsection{The Hierarchical Paradigm}
 The \term{Hierarchical Paradigm} follows
@@ -14,9 +30,16 @@ Sensing builds or updates a \term{world model}; planning uses that model to sele
 
 The world model can contain an a priori map, current observations, an estimate of the robot's state and task knowledge. It is broader than a geometric map. For delivery, it may also encode the room receiving a package and the conditions required for delivery.
 
-\textbf{Strength.} Explicit representations support goal reasoning, action sequences and the explanation of why a plan achieves a goal.
+\textbf{Slide example: guided pick (S04 p.~22).} A camera observes a part (SENSE), the system computes the grasp (PLAN), then the manipulator picks it (ACT). It works because the workcell is structured: nothing changes between looking and picking.
 
-\textbf{Limitation.} Model building and planning take time. While the robot reasons, the environment can change. Errors or omissions in the model can invalidate a seemingly correct plan. A repeated Sense--Plan--Act cycle can update the model, but its latency still matters.
+\textbf{Advantages and disadvantages (Murphy pp.~61--62).}
+\begin{itemize}
+\item \emph{Advantage:} it provides an ordering of the relationship between sensing, planning and acting; explicit representations support goal reasoning and explaining why a plan works. Murphy also notes that hierarchical architectures support a gradual evolution from semi-autonomous to fully autonomous control.
+\item \emph{Disadvantage --- planning bottleneck:} every update cycle the robot updates a global world model and then plans; with slow algorithms this is a bottleneck, and the world can change meanwhile.
+\item \emph{Disadvantage --- sensing and acting are always disconnected:} there are no stimulus--response actions (``a rock is falling on me, move anywhere'').
+\item \emph{Disadvantage --- global world model:} it leads to the frame problem and requires a closed world assumption; STRIPS reasons over irrelevant details (other rooms, other doors) just to open one door.
+\item \emph{Disadvantage --- uncertainty} is not really handled (see below).
+\end{itemize}
 
 \subsubsection{NHC and NIST RCS: what the components do}
 Murphy's \term{Nested Hierarchical Controller (NHC)} separates planning into a \term{Mission Planner} (translate a mission into a goal), \term{Navigator} (select a path and waypoints), and \term{Pilot} (select actions for the current path segment). A low-level controller converts directives into actuator commands. All use the relevant world-model information.
@@ -25,7 +48,16 @@ NHC interleaves planning and execution: the Pilot monitors progress; reaching a 
 
 Murphy's account of \term{NIST Real-time Control System (RCS)} includes \term{Sensory Perception} for preprocessing, \term{World Modeling} with a \term{Knowledge Database}, \term{Value Judgment} for evaluating plans, and \term{Behavior Generation} for executable commands. \term{NASREM} adapts this organization to space teleoperation. These descriptions concern the historical architectures in the supplied edition.
 
-Evaluating a plan through simulation can expose failures represented in the model, but adds latency and cannot compensate for every omitted real-world condition. Hierarchical execution must also handle \term{sensor noise}, \term{actuator errors}, semantic uncertainty (what counts as ``next to''?) and \term{action completion}: issuing a grasp command does not establish that the object was grasped.
+\textbf{Evaluation with the four criteria (Murphy pp.~59--61).}
+\begin{itemize}
+\item \emph{Modularity:} both give intuitive guidelines for decomposing the program, but the decomposition is strictly functional and gives little guidance for reusable components (monolithic rather than object-oriented programming).
+\item \emph{Niche targetability:} reasonable --- NHC is focused strictly on navigation; RCS is broader and was used for mining equipment, submarines, cars and floor cleaning.
+\item \emph{Portability:} unclear; the architectures are expressed at a very broad level (``a house should have bedrooms, bathrooms and a kitchen''), and code for a mining machine is hard to reuse for a submarine.
+\item \emph{Robustness:} RCS's Value Judgment simulates a plan before execution. This is a limited form of robustness, feasible in well-known environments such as a nuclear processing cell, and it adds the delay of ``mental rehearsal'' (a falling ceiling requires an immediate move).
+\end{itemize}
+Murphy's summary: hierarchical systems fell out of favor (except NIST RCS) because they favored strong niche targetability at the expense of true modularity and portability.
+
+Hierarchical execution must also handle \term{sensor noise}, \term{actuator errors}, semantic uncertainty (what counts as ``next to''?) and \term{action completion}: issuing a grasp command does not establish that the object was grasped.
 
 \subsection{The Reactive Paradigm}
 The \term{Reactive Paradigm} directly couples sensing and acting:
@@ -33,6 +65,8 @@ The \term{Reactive Paradigm} directly couples sensing and acting:
  \text{SENSE}\longrightarrow\text{ACT}.
 \]
 A \term{behavior} is a task-relevant perception--action coupling, such as avoiding obstacles or moving toward a visible goal. Multiple behaviors can run concurrently. Each uses the information needed for its function, rather than waiting for a complete global description of the scene.
+
+\textbf{Slide example: a vacuum robot at the stairs (S04 p.~25).} Sensor A looks down at the floor edge, sensors B and C look ahead. In the reactive organization each sensor is coupled directly to a response (no floor below: stop or turn away from the stairs; obstacle ahead: turn). The slide shows three parallel SENSE--ACT loops, with no map and no planner.
 
 \textbf{Example.} A move-toward-goal behavior proposes forward motion; an avoid-obstacle behavior proposes a turn. The final action depends on a coordination mechanism, such as arbitration or an appropriate combination. Without coordination, two behaviors can issue incompatible commands.
 
@@ -60,7 +94,7 @@ The \term{Hybrid Deliberative/Reactive Paradigm} combines goal reasoning with fa
 \[
  \text{PLAN},\quad \text{SENSE--ACT}.
 \]
-The comma matters: planning chooses or configures suitable behaviors, which then execute through perception--action loops. Planning is revisited when a subtask completes, the situation changes or execution fails. The reactive layer need not wait for a full new mission plan before responding to an immediate condition.
+The comma matters: the robot first plans (deliberates) how to decompose a task into subtasks (\term{mission planning}) and which behaviors suit each subtask; then the behaviors execute as in the Reactive Paradigm. S04 p.~30: ``PLAN, then instantiate appropriate SENSE-ACT behaviors, until next step in plan''; PLAN requires a world model, though a bounded one, plus the planning algorithms. The S04 hybrid slide (p.~29) draws PLAN connected to both SENSE and ACT and shows the same robot with a ``new approach'': inputs from sensors A, B and C are processed together on one board before the output to the motor, instead of three independent couplings. Planning is revisited when a subtask completes, the situation changes or execution fails. The reactive layer need not wait for a full new mission plan before responding to an immediate condition.
 
 \par\smallskip\begin{tabularx}{\linewidth}{@{}L{37mm}YY@{}}
 \toprule
@@ -72,7 +106,7 @@ Reactive / behavioral layer & Execute skills and respond to current conditions. 
 \bottomrule
 \end{tabularx}\par\smallskip
 
-The two decision loops operate on different \term{time horizons}. Reactive control focuses on the immediate present. Deliberation may use the past, predict future consequences and compare alternatives. Sensing can feed both local behaviors and the model used by the planner.
+The two decision loops operate on different \term{time horizons}. Reactive control focuses on the immediate present. Deliberation may use the past, predict future consequences and compare alternatives. Sensing organization is mixed: sensor data is routed to each behavior that needs it, but is also available to the planner for a task-oriented global world model; the planner may ``eavesdrop'' on the behaviors (an obstacle found by a behavior is put into the map). Each function runs at its own rate: planning may update every few seconds (Murphy's example: 5~s), behaviors many times per second (1/60~s).
 
 \textbf{Example: corridor blocked during delivery.}
 \begin{enumerate}
@@ -88,7 +122,9 @@ A measurement and a symbolic fact are different representations. A range observa
 
 The world model must contain enough information for useful decisions while remaining tractable. Maintaining all details at all times is expensive and can slow the very decisions needed for adaptation. Conversely, discarding all history makes some tasks impossible.
 
-Interaction adds another requirement. The robot may need to represent another agent's \term{beliefs, desires and intentions (BDI)} and establish \term{common ground}: a shared understanding of the task and what a command means. ``Bring the cup'' needs agreement about which cup and where it should go. These are additional representation problems, not automatic consequences of having a planner.
+S04 p.~28 (``the hard part'') lists what changes from reactive to deliberative: two types of perception, \term{direct} and \term{recognition} (symbols), which impacts computer vision; different time horizons, which impacts sensing, storage and the algorithms for reasoning and projecting; and the need for a central, tractable \term{world model} holding symbols, history and knowledge.
+
+Interaction adds another requirement, a \term{theory of mind}: the robot may need to represent another agent's \term{beliefs, desires and intentions (BDI)} and establish \term{common ground}: a shared understanding of the task and what a command means. ``Bring the cup'' needs agreement about which cup and where it should go. These are additional representation problems, not automatic consequences of having a planner.
 
 \subsection{The three paradigms compared}
 \par\smallskip\begin{tabularx}{\linewidth}{@{}L{24mm}YYY@{}}
@@ -105,7 +141,7 @@ Main challenge & Model accuracy and planning latency. & Coordination and limited
 \key{A hybrid architecture combines complementary capabilities. It still needs suitable models, behaviors and interfaces; the word ``hybrid'' alone does not establish robustness.}
 
 \subsection{Evaluating an architecture}
-Murphy's four criteria provide a practical vocabulary for comparing implementations:
+Murphy's four criteria (adapted from Arkin) provide a practical vocabulary for comparing implementations; they are applied to NHC and RCS above:
 \begin{enumerate}
 \item \term{Support for modularity:} are responsibilities and interfaces clear enough to maintain and reuse components?
 \item \term{Niche targetability:} does the architecture fit its intended task and environment?

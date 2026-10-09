@@ -1,6 +1,6 @@
 # Continue next time — Intelligent Robotics
 
-Last updated: 2026-10-09. Document version: **0.2**.
+Last updated: 2026-10-09. Document version: **0.3**.
 
 ## Goal and user preferences
 
@@ -10,14 +10,14 @@ The user supplied old-exam questions as a coverage checklist. These include late
 
 ## Repository and build
 
-- Actual location: `/mnt/ssd/Intelligent Robotics`, on the drive labeled `ssd ale`.
-- Desktop location: `/home/marti/Desktop/Intelligent Robotics`, a symlink to the SSD repository.
+- Working copies: the repository can be cloned anywhere. Known locations: `/mnt/ssd/Intelligent Robotics` (original author's SSD, Desktop symlink `/home/marti/Desktop/Intelligent Robotics`) and `C:\Users\edinm\Desktop\Intelligent-Robotics-main` (WSL `/mnt/c/...`). Use paths relative to the repository root.
 - Stable deliverable: `output/pdf/intelligent-robotics-notes.pdf`.
 - Main source: `latex/main.tex`; topics: `latex/chapters/`.
 - Build: `python3 scripts/build.py` (or `make pdf`).
-- Tectonic 0.17.0 is in `.tools/`. Compiler downloads, cache, temporary files and previews must remain inside the SSD repository. Do not install a large TeX distribution on the internal disk.
+- Tectonic 0.17.0 is in `.tools/` (reinstall with `python3 scripts/build.py --install-compiler` if missing). Compiler downloads, cache, temporary files and previews must remain inside the repository. Do not install a large TeX distribution system-wide.
+- No system PDF tools (poppler) are installed; for text extraction/rendering a session used PyMuPDF installed outside the repository.
 - Read `AGENTS.md`, `README.md`, `LESSONS.md` and `COVERAGE_AUDIT.md` before changing coverage.
-- A local commit is prepared for pushing to `origin` (`git@github.com:Martinioini/Intelligent-Robotics.git`), branch `main`. No remote push has been performed.
+- Remote: `git@github.com:Martinioini/Intelligent-Robotics.git`, branch `main`.
 - Git includes the LaTeX/build sources, notes PDF, documentation and exam screenshots. Original slide/book PDFs remain local and ignored; `Material/README.md` is the versioned input inventory.
 
 ## Material currently available
@@ -27,6 +27,18 @@ Only three slide sets: S02 (32 PDF pages), S03 (27), S04 (30), totaling 89 slide
 Slide references use one-based PDF pages. Book references use printed pages; for the numbered body in this extract, PDF page = printed page + 21. S03 and S04 have older A.Y. 2024–25 cover labels; identify them by the supplied filenames.
 
 No separate lecture-note file has been found in `Material/`; the available supplementary notes are the Murphy extract and the generated LaTeX study notes.
+
+## Work completed in the third audit (version 0.3)
+
+A fresh comparison of the notes against slide text, the key slide diagrams and Murphy's chapter objectives/summaries found that v0.2 captured concepts but lost slide-specific terminology and some book objectives. Added:
+
+- S02: development timeline by decade, informal robot definition, disciplines per fundamental element, field/service definitions, **classical AI paradigm vs intelligent robotics paradigm** (pp. 30–31).
+- S03: industrial-revolution landmark dates, Unimate details, Murphy's tool→agent timeline and its drivers, cobot features/market indication, humanoid interest and barriers (incl. safety standards, teleoperation reliance).
+- S04: Merriam-Webster definition and myth of evil robots, Watt's self-governor, verbatim automation (tools)/autonomy (agents) definitions, the four keyword pairs (execution/generation, deterministic/non-deterministic, closed/open world, signals/symbols), why the difference matters, CWA bullet points, Pat Hayes, Loop 1/Loop 2, guided-pick and vacuum-robot examples, theory of mind, "the hard part".
+- Murphy: Fig. I.2 primitive input/output table, paradigm periods and motivations, Murphy's paradigm/architecture definitions, full STRIPS difference table with state after each step, hierarchical advantages/disadvantages, NHC/RCS evaluation with the four criteria, hybrid eavesdropping and update rates, IRM at Level 2, releaser/guide fish example, Murphy's principles list.
+- Removed several non-informative disclaimers. Seven revision questions added (now 28).
+
+Verification: 25 pages, 28 revision questions, zero Tectonic warnings; all pages rendered and inspected; previews removed.
 
 ## Work completed in the second audit
 

@@ -4,7 +4,7 @@ A single, concise study PDF in **English**, based on the supplied course slides 
 
 **Read:** [Consolidated study notes](output/pdf/intelligent-robotics-notes.pdf)
 
-Current coverage: slide sets **02, 03 and 04**. Definitions and examples are organized by topic; repeated slides and product/market catalogues are condensed. Each topic has source reading anchors. Revision questions include concise model answers. Version 0.2 also includes a clearly labeled supplement for the available book Chapter 3 foundations.
+Current coverage: slide sets **02, 03 and 04**. Definitions and examples are organized by topic; repeated slides and product/market catalogues are condensed. Each topic has source reading anchors. Revision questions include concise model answers. Version 0.3 also includes a clearly labeled supplement for the available book Chapter 3 foundations and the slide-specific terminology, examples and Murphy objectives added in the third audit.
 
 ## Get the repository
 

@@ -1,5 +1,5 @@
 \section{From industrial tools to collaborating agents}
-\sources{S03, PDF pp. 2--16, 21--27; S02, PDF pp. 30--32; Murphy, printed pp. 13--28.}
+\sources{S03, PDF pp. 2--27; S02, PDF p. 32; Murphy, printed pp. 13--28.}
 \subsection{Two historical pressures}
 Murphy summarizes useful applications through the \term{three D's}: \term{dirty}, \term{dull} and \term{dangerous} work. These motivations include industrial repetition, hazardous handling and humanitarian tasks such as search and rescue. Adoption also involves economic, social and cultural factors. A \term{Luddite}, in the book's historical discussion, is associated with opposition to technological change; technical capability alone does not establish that people will accept an application.
 
@@ -19,23 +19,35 @@ Collaborative robotics & Human and robot work in a shared environment and task. 
 \bottomrule
 \end{tabularx}\par\smallskip
 
-S03 dates the establishment of Unimation to 1956 and development of Unimate to 1959. The broad dates for Shakey follow S03. Murphy's illustration gives a narrower development interval. For revision, the important point is the integration of sensing, a world model and planning, rather than memorizing a single project date.
+\textbf{Unimate (S03 p.~16).} In 1956 George Devol and Joe Engelberger founded \term{Unimation} (Universal Animation), which developed \term{Unimate}, the first industrial robot, in 1959. It weighed two tons, was controlled by a program stored on a magnetic drum, used hydraulic actuators, was programmed in joint coordinates, and had an accuracy of 1/10,000 of an inch. It is the prototype of a \emph{tool}: precise repetition in an engineered workspace.
+
+\textbf{Shakey (S03 p.~22).} Developed at SRI's Artificial Intelligence Center from 1966 to 1972, Shakey was the first mobile robot to reason about its actions, using programs for perception, world modeling and planning to achieve goals given by a user. It introduced the Hierarchical Paradigm and STRIPS (Section~3). Murphy's illustration gives a narrower interval; the integration of sensing, a world model and planning is the point to remember.
+
+\subsection{Murphy's timeline: from tools to agents}
+S03 (pp.~15, 25) shows Murphy's timeline (2nd ed., 2019) on two tracks. \term{Industrial robots} (Unimate, SCARA, Kiva/Amazon warehouse systems) are positioned as \term{tools}; \term{mobile robots} (Shakey, Mars rovers, drones, Roomba) move toward \term{agents}. Each period was driven by an external need:
+\begin{itemize}
+\item WWII and nuclear weapon production: telemanipulation and the nuclear industry.
+\item The space race: planetary exploration and Mars rovers.
+\item The Vietnam war: early unmanned aircraft (Firebee, Lightning Bug).
+\item The Iraq and Afghanistan wars: Predator, weaponized Predator and small unmanned aerial systems.
+\end{itemize}
+The final version of the slide adds \term{collaborative robots (HRI)} as the newest branch. The axis tool~$\rightarrow$~agent anticipates the automation/autonomy distinction of Section~3.
 
 \subsection{Industrial revolutions: the organizing idea}
 \begin{enumerate}
-\item \term{Industry 1.0:} mechanization through steam and other mechanical power sources.
-\item \term{Industry 2.0:} electrification, assembly lines and mass production.
-\item \term{Industry 3.0:} electronic control, computers and programmable automation, including PLCs.
-\item \term{Industry 4.0:} connected production systems in which machines, data and information technologies are integrated.
+\item \term{Industry 1.0} (first steam loom, c.\ 1780): mechanization through steam power.
+\item \term{Industry 2.0} (first assembly line, c.\ 1870): electrification, assembly lines and mass production.
+\item \term{Industry 3.0} (first PLC, c.\ 1970): electronic control, computers and programmable automation.
+\item \term{Industry 4.0} (today): connected production systems in which machines, data and information technologies are integrated.
 \end{enumerate}
 The enabling technologies shown in S03 include \term{Big Data}, the \term{Internet of Things}, \term{robotic automation}, \term{cloud computing and cybersecurity}, \term{human--machine interfaces}, and \term{additive manufacturing}. Together they support connected observation, information exchange, production and interaction. Connectivity supplies information; the robot still needs a suitable decision and control architecture to use it.
 
-The dates in the slides are approximate teaching landmarks. The useful progression is from mechanizing an operation to automating it and then connecting it to a wider information system.
+The dates are approximate teaching landmarks. The useful progression is from mechanizing an operation to automating it and then connecting it to a wider information system.
 
 \term{Industry 5.0}, as presented in S03, complements Industry 4.0 by emphasizing a \term{human-centric}, \term{sustainable} and \term{resilient} industry. Productivity is part of the design problem, alongside worker wellbeing, environmental limits and the ability to cope with disruptions.
 
 \subsection{Collaborative robotics and shared intelligence}
-In \term{collaborative robotics}, humans and robots share an environment and collaborate on tasks. S03 highlights potentially reduced cost and footprint as reasons for interest from \term{small and medium-sized enterprises (SMEs)}. The system should combine the robot's repeatability and physical capability with human judgment, flexibility and task knowledge.
+\term{Collaborative robotics} is a new paradigm in industrial robotics in which humans and robots share the same environment and collaborate at the same tasks (S03 p.~11). S03 lists three features of \term{collaborative robots (cobots)}: humans and robots work at the same task; protective fences are not needed; they are particularly interesting for \term{small and medium-sized enterprises (SMEs)} because of reduced cost and footprint. Cobots were about 10\% of the global robot market in 2025, growing by roughly 20\% per year. The slide of Rodney Brooks showing a child how to approach a dual-arm manipulator without fear of being hit illustrates the change from fenced cells. The system should combine the robot's repeatability and physical capability with human judgment, flexibility and task knowledge.
 
 The slides ask: \emph{Where is the intelligence located? Should the robot execute commands or interpret them?} The \term{shared-intelligence approach} answers by distributing useful capabilities across the human and the robot. A command can specify a goal while leaving some execution decisions to the robot.
 
@@ -54,6 +66,6 @@ The contrast between a \term{dark factory} and a collaborative workspace introdu
 
 S03 contrasts traditional fenced industrial cells with collaborative applications. The conceptual point is closer interaction. Whether protective separation can be removed depends on the complete application, including the tool, workpiece, motion and protective measures. Treat the slide's ``no fences'' wording as an illustration of a possible arrangement, rather than a universal property of every collaborative robot.
 
-The humanoid examples illustrate interest in machines that can operate in spaces and with tools designed for people. They also highlight unresolved practical constraints: manipulation capability, training, maintenance and economic viability. Human-like appearance does not establish autonomous competence. The same distinction applies to personal robots and androids shown in S02.
+\textbf{Humanoids in factories (S03 p.~27).} Interest is high but the market is early. \emph{Why the interest:} progress in AI, sensors and control systems, and the ability to operate in environments designed for humans. \emph{Barriers to scale:} safety standards, training and maintenance costs, manipulation capabilities and economic sustainability. The IFR warns to distinguish potential from commercial maturity: many applications remain specialized and still rely on human teleoperation. Human-like appearance does not establish autonomous competence. The same distinction applies to personal robots and androids shown in S02.
 
 \key{Robot form, collaboration and autonomy answer different questions: what the machine is built like, how it works with people, and which decisions it can make for a specified task.}

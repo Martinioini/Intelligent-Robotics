@@ -2,7 +2,7 @@
 
 The original course slides and book extract are kept locally and excluded from Git. The study PDF is compiled from the original LaTeX notes and does **not** require these source PDFs for its build.
 
-To extend or audit the notes, put the relevant reference PDFs under `Material/slides/` or `Material/Books/`. The inventory below identifies the inputs used for version 0.2. Page counts refer to PDF pages.
+To extend or audit the notes, put the relevant reference PDFs under `Material/slides/` or `Material/Books/`. The inventory below identifies the inputs used for versions 0.2 and 0.3 (unchanged). Page counts refer to PDF pages.
 
 | File relative to `Material/` | Pages | SHA-256 |
 | --- | --- | --- |

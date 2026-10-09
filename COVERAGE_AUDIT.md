@@ -1,4 +1,4 @@
-# Coverage audit — version 0.2
+# Coverage audit — version 0.3
 
 Checked 2026-10-09 against all 89 supplied slide pages (text and visual diagrams), the available Murphy introduction and Chapters 1–3, and the current LaTeX notes. This is a **conceptual coverage audit**, not a transcription of every figure, historical story, end note or exercise solution. Source originals are unchanged.
 
@@ -9,14 +9,14 @@ All references below use **PDF page numbers**. Covers, divider slides and repeat
 | Source pages | Content | Destination / result |
 | --- | --- | --- |
 | S02 1, 4–5 | Cover and definition prompts | Scope; foundations introduction |
-| S02 2–3 | Robotics, perception/action, historical development | Foundations; evolution |
+| S02 2–3 | Robotics, perception/action, historical development | Foundations; decade timeline added in v0.3 |
 | S02 6–7 | Robot etymology and course ISO definition | Robot, robotics and intelligent robot |
 | S02 8–9 | Sensors, information processing, actuators and disciplines | Fundamental elements |
 | S02 10–14 | Field/service robotics; rover, rescue, domestic and medical examples | Taxonomy, field/service distinction and examples |
 | S02 15–19 | Education/domestic/personal robots, humanoids/androids and transport | Applications condensed; form distinguished from autonomy |
 | S02 20–23 | Mobile/manipulation and autonomous/teleoperated taxonomy | Independent taxonomy dimensions |
 | S02 24–29 | One loop across domains; sensing, localization, mapping, motion | Sense–Plan–Act; diagram/function examples |
-| S02 30–31 | Classical AI versus embodied intelligent behavior | Intelligent robot and paradigm distinctions |
+| S02 30–31 | Classical AI paradigm versus intelligent robotics paradigm | Dedicated subsection (v0.3) and revision Q24 |
 | S02 32 | Human in the loop; interpret versus execute commands | Shared intelligence; collaboration versus hybrid architecture |
 | S03 1–3, 10 | Cover, divider and collaborative paradigm repeat | Scope; evolution/collaboration |
 | S03 4–6 | Industrial revolutions; enabling Industry 4.0 technologies | Industrial revolutions and six technology groups |
@@ -25,11 +25,11 @@ All references below use **PDF page numbers**. Covers, divider slides and repeat
 | S03 15–16, 21–22, 25 | Historical branches, Unimation/Unimate, AI and Shakey | Historical pressures and milestone table |
 | S03 17–20, 24 | Performance demonstration and industrial/service market plots | Examples condensed; market counts intentionally omitted |
 | S03 23, 26–27 | Autonomous example, cobots, humanoid interest and barriers | Collaboration/autonomy/form distinction; application limitations |
-| S04 1–4 | Autonomy prompts, self-governing, bounded rationality | Automation versus autonomy; scope and limits |
+| S04 1–4 | Autonomy prompts, Merriam-Webster, Watt self-governor, bounded rationality | "What autonomy means" subsection (v0.3) |
 | S04 5–7 | Tool versus agent; examples; CWA | Definitions, comparisons and CWA examples |
 | S04 8 | Greenfield/brownfield | Dedicated comparison |
 | S04 9–12 | Monkey/banana toy world; open world | Model assumptions and toy planning example |
-| S04 13–18 | Plans/actions/models/representation balances | Comparison table and continuum explanation |
+| S04 13–18 | Delegation/focus; execution–generation, deterministic–non-deterministic, closed–open, signals–symbols | Keyword table with slide wording (v0.3) |
 | S04 19–25 | Architecture prompt; deliberative/reflex analogy; hierarchical/reactive | Architecture distinctions and Sense–Plan–Act/Sense–Act |
 | S04 26–28 | Perception to symbols; interfacing; time horizons; BDI/common ground | Hybrid layers, interface difficulties and interaction |
 | S04 29–30 | Hybrid diagrams and Plan, Sense–Act behavior activation | Hybrid organization and execution/replanning example |
@@ -60,6 +60,10 @@ The original version covered the supplied slides at a conceptual level, but sele
 
 The source map in the PDF differentiates slide coverage from book-only integration. Product catalogues, repeated imagery, market counts and tangential historical details remain condensed rather than omitted silently as missing technical coverage.
 
+## Version 0.3 recheck
+
+A third audit found that v0.2 was conceptually correct but had paraphrased away slide keywords (tool/agent, the four S04 pairs), omitted the S02 classical-AI/intelligent-robotics contrast and the S02/S03 historical facts, and did not meet three explicit Murphy objectives (primitive I/O table, STRIPS state after each step, evaluation of a hierarchical architecture with the four criteria). All were added; see `CONTINUE.md`. "Represented" in the tables above now means present with the course wording, not only the underlying idea.
+
 ## Exam scope
 
 There are 13 supplied exam prompts/cues, recorded individually in `CONTINUE.md`, with the five screenshot originals stored under `exam-examples/`. **No detailed later-topic answer is marked complete.** Sensor physics, tactile construction, C-space, SLAM, subsumption architecture, ROS communication, synchro drive, Kalman filtering, event cameras, bumpers and IMUs require subsequent material. The current PDF explicitly states this boundary.
@@ -68,4 +72,4 @@ There are 13 supplied exam prompts/cues, recorded individually in `CONTINUE.md`,
 
 ## Validation
 
-The PDF is rebuilt from the LaTeX source with the repository build script. Version 0.2 produces **20 pages**, with **21 revision questions**. Compilation completed with zero warnings. All final pages were rendered and visually inspected; source-map rows, terminology, question count and handoff links were verified. Coverage claims here concern the source scope above, not the entire final-exam syllabus.
+The PDF is rebuilt from the LaTeX source with the repository build script. Version 0.3 produces **25 pages**, with **28 revision questions**. Compilation completed with zero warnings. All final pages were rendered and visually inspected; source-map rows, terminology, question count and handoff links were verified. Coverage claims here concern the source scope above, not the entire final-exam syllabus.

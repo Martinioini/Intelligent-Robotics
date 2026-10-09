@@ -1,0 +1,61 @@
+\section{Book supplement: biological foundations of behavior}
+\sources{Murphy, Chapter 3, printed pp. 67--100. These foundations are available in the book extract; S04 introduces the reactive architecture but does not teach all these details.}
+\subsection{Biological inspiration and computational theory}
+Biology supplies examples of agents succeeding with tightly coupled perception and action. The engineering objective is to extract useful principles, rather than reproduce every biological structure. Murphy distinguishes three levels of a \term{computational theory}:
+\begin{enumerate}
+\item \term{What can or should be done:} establish a function, such as approaching a target.
+\item \term{Inputs, outputs and transformations:} describe the process, such as mapping a detected target direction to a steering command.
+\item \term{Implementation:} choose the mechanism or algorithm that performs that transformation.
+\end{enumerate}
+A robot and an animal may share a function and process while implementing them differently. \term{Braitenberg vehicles} illustrate how simple sensor--motor couplings can produce apparently purposeful motion.
+
+\subsection{Behavior categories and acquisition}
+A \term{behavior} maps sensory inputs to a pattern of motor actions supporting a task. Murphy's ethological categories are \term{reflexive} (innate stimulus--response), \term{reactive} (a learned skill executed without conscious attention) and \term{conscious} (deliberative). The word \emph{reactive} in robotics is used more broadly for close perception--action coupling; it does not imply that the behavior was learned.
+
+The reflexive categories are:
+\begin{itemize}
+\item \term{Reflexes:} the response persists while the stimulus persists and scales with it.
+\item \term{Taxes} (singular \term{taxis}): orientation or movement relative to a stimulus, such as approaching light or moving away from it.
+\item \term{Fixed-action patterns:} a response continues beyond the initiating stimulus, such as fleeing after the threat disappears from view.
+\end{itemize}
+Behaviors can be innate, a sequence of innate behaviors, innate with memory or initialization, or learned. Innateness and memorylessness are different properties. An agent may have an innate navigation routine while learning its home location.
+
+\subsection{Innate Releasing Mechanisms and coordination}
+An \term{Innate Releasing Mechanism (IRM)} specifies when a behavior becomes active. A \term{releaser} is an activation condition, possibly combining an external observation with \term{internal state} or \term{motivation}. Low battery and a visible charging station can jointly release a charging behavior.
+
+\textbf{Illustrative control logic:}
+\begin{quote}\ttfamily
+if immediate\_threat: execute escape\_behavior\newline
+else if battery\_low and station\_visible: approach\_station\newline
+else: execute current\_task
+\end{quote}
+The priority structure prevents simultaneous execution of incompatible commands in this example. It is an explanatory adaptation of the book's IRM examples, not a complete robot controller. Persistent escape would additionally require a latch, timer or state; losing sight of the threat does not necessarily mean the threat has ended.
+
+\term{Implicit chaining} lets completion of one behavior change the internal or environmental conditions that release the next. An explicit sequence that runs each behavior to completion can delay responses to a new stimulus. The timing and activation logic are therefore part of the design.
+
+Concurrent behaviors can yield \term{equilibrium}, \term{dominance} (winner takes all), or \term{cancellation}. \term{Inhibition} disables a competing behavior. Coordination must be selected deliberately; simply running every released behavior does not ensure a useful action.
+
+\subsection{Action--perception cycle and two uses of perception}
+An action changes the world or the agent's viewpoint, affecting its next observation. That observation guides another action: the \term{action--perception cycle}. This cycle does not require explicit planning at every update.
+
+Perception has two distinct roles: \term{releasing} a behavior and \term{guiding} it after activation. Seeing a target may trigger approach; subsequent observations of its direction guide steering. \term{Action-oriented perception} extracts information relevant to that behavior. \term{Selective attention} determines which information to examine next.
+
+\term{Active perception} changes the agent's action to gather better information before continuing the primary task, for example moving to see around an occluder. This term describes a perception strategy; it does not by itself classify the sensor hardware as active or passive. The hardware classification requires later sensor material.
+
+Gibson's \term{affordances} and Neisser's \term{direct perception versus recognition} are explained in the architecture section. Murphy's \term{optic flow} example uses apparent image motion to support action, including \term{time to contact}; it illustrates action-relevant perception rather than semantic recognition of every object.
+
+\subsection{Schema theory: connecting perception and motion}
+A \term{schema} is a reusable template of data and computation. A \term{schema instantiation (SI)} supplies concrete parameters, analogous to constructing an object from a class.
+
+A primitive behavior combines a \term{perceptual schema} for extracting a percept and a \term{motor schema} for converting it into action. Instantiating \texttt{move\_to\_target} supplies a specific target. A \term{gain} can scale the motor response.
+
+A \term{meta-behavior} can sequence primitives or choose alternative perceptual/motor schemas, such as switching perception when vision is unsuitable.
+
+In Murphy's \term{rana computatrix}, two targets produce two motor vectors; their sum points between the targets. This demonstrates emergence and potentially unintended composition. Schema theory does not prescribe a universal coordination rule.
+
+\key{IRM answers ``when is the behavior active?'' A perceptual schema answers ``what information does it use?'' A motor schema answers ``how does that information become action?'' Coordination answers ``what happens if multiple behaviors are active?''}
+
+\subsection{Transfer to robots: what remains difficult}
+Useful principles are independent behaviors, local activation conditions, task-relevant perception and explicit coordination. Open issues include resolving conflicts, deciding when memory or symbolic knowledge is necessary, and acquiring new behavior sequences.
+
+A white-line follower distracted by white shoes illustrates an unintended stimulus. Biological inspiration does not guarantee success. Check operating conditions and failure cases.

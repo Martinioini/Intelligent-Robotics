@@ -1,0 +1,23 @@
+.tools/
+.cache/
+.tmp/
+tmp/
+__pycache__/
+output/pdf/*
+!output/pdf/intelligent-robotics-notes.pdf
+*.aux
+*.toc
+*.out
+*.synctex.gz
+*.log
+
+# Local reference inputs (inventory remains versioned)
+Material/*
+!Material/README.md
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*~

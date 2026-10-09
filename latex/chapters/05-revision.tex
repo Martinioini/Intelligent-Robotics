@@ -1,0 +1,99 @@
+\section{Revision: explain, compare, apply}
+\subsection{The essential chain of reasoning}
+\begin{enumerate}
+\item A robot acts physically through actuators and obtains information through sensors.
+\item Engineered, repetitive tasks can often use a prepared plan and a sufficiently complete model.
+\item Unknowns and changes require current sensing, execution monitoring and adaptation.
+\item Hierarchical organization supports explicit plans; reactive organization supports immediate responses.
+\item Hybrid organization links these capabilities, while human--robot interaction adds control allocation and shared understanding.
+\end{enumerate}
+
+\subsection{Questions with concise model answers}
+\begin{samepage}\textbf{1. Is every robot an intelligent robot?}\\
+No. A robot may mainly replay a prepared sequence. An intelligent robot uses information about its situation to select or adapt actions toward a task goal.\par\end{samepage}
+
+\begin{samepage}\textbf{2. Why does field robotics make perception important?}\\
+Its environment cannot usually be arranged and maintained like a production fixture. The robot must observe relevant changes instead of relying only on a prepared description.\par\end{samepage}
+
+\begin{samepage}\textbf{3. What separates telepresence from autonomy?}\\
+Telepresence improves the human's experience of the remote environment. Autonomy concerns which decisions and tasks the robot can perform independently.\par\end{samepage}
+
+\begin{samepage}\textbf{4. How do shared control and control trading differ in Murphy?}\\
+Shared control involves assistance or monitored delegation with human involvement. Control trading delegates a task the robot can complete autonomously until a new command or interruption.\par\end{samepage}
+
+\begin{samepage}\textbf{5. Explain automation versus autonomy without using robot shape.}\\
+Automation emphasizes repeated execution under well-modeled conditions. Autonomy emphasizes adaptation when relevant conditions or outcomes are uncertain. Both can exist in the same robot.\par\end{samepage}
+
+\begin{samepage}\textbf{6. What happens to an unlisted obstacle under CWA and OWA?}\\
+Under CWA, the model treats it as absent. Under OWA, its absence from the model leaves its existence unknown. Current observations are needed to determine whether a route is clear.\par\end{samepage}
+
+\begin{samepage}\textbf{7. Can closed-loop control be used under CWA?}\\
+Yes. Feedback may correct a joint's position while the workspace and task are assumed complete and known. Model completeness and feedback are different properties.\par\end{samepage}
+
+\begin{samepage}\textbf{8. Why can a valid symbolic plan fail?}\\
+It is valid relative to its model. An omitted condition, an unexpected event or an action whose physical effect differs from its modeled effect can prevent execution.\par\end{samepage}
+
+\begin{samepage}\textbf{9. What is the frame problem?}\\
+Representing the effects of actions and the persistence of unaffected facts without an impractical enumeration. Murphy also emphasizes the broader burden of maintaining a tractable world model.\par\end{samepage}
+
+\begin{samepage}\textbf{10. Is STRIPS a robot architecture?}\\
+No. It is a symbolic planning method. An architecture must also organize perception, execution and the information exchanged among components.\par\end{samepage}
+
+\begin{samepage}\textbf{11. What separates hierarchical and reactive sensing?}\\
+Hierarchical sensing is fused into a shared world model for planning. Reactive sensing is distributed according to the needs of individual perception--action behaviors.\par\end{samepage}
+
+\begin{samepage}\textbf{12. What does an affordance add to object recognition?}\\
+It describes an opportunity for action relative to the agent. Detecting a passage wide enough for a robot can be more useful for navigation than naming every object around it.\par\end{samepage}
+
+\begin{samepage}\textbf{13. Why combine deliberative and reactive layers?}\\
+Deliberation supports goals, memory and future consequences; reactive behaviors support rapid responses to current conditions. An interface makes their decisions and status useful to each other.\par\end{samepage}
+
+\begin{samepage}\textbf{14. Is collaborative robotics the same as a hybrid architecture?}\\
+No. Collaboration concerns human--robot work. A hybrid architecture concerns the robot's internal organization of planning and behavior execution.\par\end{samepage}
+
+\begin{samepage}\textbf{15. What are the three levels of a computational theory?}\\
+Define the function, decompose it into inputs/outputs and transformations, then choose an implementation. Biological and robotic agents can share the first two without sharing the third.\par\end{samepage}
+
+\begin{samepage}\textbf{16. What is an IRM, and what can be a releaser?}\\
+An Innate Releasing Mechanism specifies activation of a behavior. A releaser can be an external stimulus, an internal state, or a combination, such as low battery and a visible station.\par\end{samepage}
+
+\begin{samepage}\textbf{17. How do perceptual and motor schemas compose a behavior?}\\
+The perceptual schema extracts the relevant information; the motor schema maps it into action. Instantiation supplies parameters for a concrete situation. The releaser determines activation.\par\end{samepage}
+
+\begin{samepage}\textbf{18. How does STRIPS handle a failed precondition?}\\
+In Murphy's means--ends presentation, the failed precondition becomes a subgoal. The planner recursively finds operators to achieve it, updates a modeled state, and returns to the original goal before physical execution.\par\end{samepage}
+
+\begin{samepage}\textbf{19. Name the four criteria for evaluating an architecture.}\\
+Support for modularity, niche targetability, ease of portability to other domains, and robustness. Explain each with respect to the intended application and its failure cases.\par\end{samepage}
+
+\begin{samepage}\textbf{20. Does NHC repeat all planning after each observation?}\\
+No. The Pilot monitors the current path segment; a reached waypoint advances navigation, while an obstruction can return control to the Navigator. The entire mission need not be recomputed.\par\end{samepage}
+
+\begin{samepage}\textbf{21. Is active perception the same as an active sensor?}\\
+No. Active perception changes an action to obtain better information. Whether the sensor hardware is active or passive is a separate classification that requires the later sensing material.\par\end{samepage}
+
+\subsection{One scenario across the whole course}
+\textbf{Task:} a robot brings a component to a worker, but someone leaves a trolley in the corridor.
+
+\textbf{Automation perspective.} If the design assumes a fixed clear route, replaying the prepared sequence may fail. A low-level feedback controller can track the requested motion without understanding that the route itself is unsuitable.
+
+\textbf{Open-world perspective.} The prior map does not prove present clearance. The robot must detect the trolley and update its understanding of the route.
+
+\textbf{Reactive response.} A local behavior slows or stops the robot in response to the obstruction. This response alone may leave the delivery unfinished.
+
+\textbf{Deliberative response.} A planner evaluates an alternative route using the updated model and the delivery goal.
+
+\textbf{Hybrid response.} The local behavior handles the immediate obstruction while the planning layer resolves the route. The interface connects the observed failure to the task plan.
+
+\textbf{Shared-intelligence response.} If the route cannot be resolved, the robot can report the problem to a human. The human may change the goal or give contextual information while the robot performs the local execution.
+
+\subsection{Common mistakes to avoid}
+\begin{itemize}
+\item Using \emph{closed world} and \emph{closed-loop control} interchangeably.
+\item Treating an unknown fact as false in an open-world task.
+\item Equating AI with machine learning, or intelligence with humanoid appearance.
+\item Assuming autonomy means the complete absence of a human supervisor.
+\item Assuming reactive behaviors do not need coordination or computation.
+\item Assuming a world model is only a geometric map.
+\item Using \emph{collaborative}, \emph{shared control} and \emph{hybrid architecture} as synonyms.
+\end{itemize}

@@ -1,0 +1,66 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{lmodern,microtype}
+\usepackage[margin=22mm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,booktabs,tabularx,array}
+\usepackage{xcolor,enumitem,fancyhdr,titlesec,needspace,hyperref}
+\definecolor{ink}{HTML}{193C50}
+\definecolor{muted}{HTML}{546774}
+\definecolor{pale}{HTML}{EEF3F5}
+\hypersetup{colorlinks=true,linkcolor=ink,urlcolor=ink,pdftitle={Intelligent Robotics - Consolidated Study Notes},pdfauthor={Course study notes}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlength{\emergencystretch}{2em}
+\setcounter{tocdepth}{2}
+\renewcommand{\arraystretch}{1.22}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\setlist[itemize]{leftmargin=*,itemsep=2pt,topsep=3pt}
+\setlist[enumerate]{leftmargin=*,itemsep=3pt,topsep=3pt}
+\titleformat{\section}{\Large\bfseries\color{ink}}{\thesection}{0.7em}{}
+\titleformat{\subsection}{\large\bfseries\color{ink}}{\thesubsection}{0.7em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{ink}}{\thesubsubsection}{0.7em}{}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\color{muted}Intelligent Robotics}
+\fancyhead[R]{\small\color{muted}Consolidated study notes}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\newcommand{\key}[1]{\par\smallskip\noindent\colorbox{pale}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\textbf{Key idea.} #1}}\par\smallskip}
+\newcommand{\sources}[1]{\par{\small\color{muted}\textbf{Reading anchors:} #1}\par\medskip}
+\newcommand{\term}[1]{\textbf{#1}}
+\let\originalsection\section
+\renewcommand{\section}{\Needspace{7\baselineskip}\originalsection}
+\begin{document}
+\thispagestyle{empty}
+{\small\color{muted}COURSE COMPANION \quad / \quad A.Y. 2026--27\par}
+\vspace{12mm}
+{\Huge\bfseries\color{ink}Intelligent Robotics\par}
+\vspace{4mm}
+{\LARGE Consolidated Study Notes\par}
+\vspace{7mm}
+{\large Foundations, autonomy and robot architectures\par}
+\vspace{8mm}
+\key{A robot connects perception to action in the physical world. The central design question is how to organize that connection when the world cannot be fully specified in advance.}
+\vspace{3mm}
+\textbf{Current coverage:} supplied slide sets 02, 03 and 04, integrated with the corresponding passages of Robin R. Murphy's \emph{Introduction to AI Robotics} (2000).
+
+These notes condense repeated slides and illustrative catalogues into definitions, comparisons and worked examples. They retain the English terminology of the course. They are an original synthesis, rather than a reproduction of the source material.
+
+\textbf{How to study.} Read Sections 1--5 in order, then answer the questions in Section 6 without looking at the answers. Use the reading anchors to return to a specific source only when a concept remains unclear.
+
+\textbf{Scope.} The supplied book file contains only its first 124 PDF pages. Later chapters listed in its table of contents are not available here. Slide sets 03 and 04 retain A.Y. 2024--25 cover labels; their filenames identify the supplied lessons. The book supplement separates available Chapter 3 foundations from the introductory slide content. Later exam topics are tracked separately in the repository handoff. Market figures and product catalogues are condensed.
+
+\vfill
+{\small Version 0.2 \quad | \quad Updated 9 October 2026\par}
+\clearpage
+{\setlength{\parskip}{0pt}\small\tableofcontents}
+\clearpage
+\input{chapters/01-foundations}
+\input{chapters/02-evolution-collaboration}
+\input{chapters/03-automation-autonomy}
+\input{chapters/04-architectures}
+\input{chapters/04b-behavior-foundations}
+\input{chapters/05-revision}
+\input{chapters/06-sources}
+\end{document}

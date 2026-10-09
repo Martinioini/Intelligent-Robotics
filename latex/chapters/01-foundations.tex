@@ -1,0 +1,91 @@
+\section{What makes a robot intelligent?}
+\sources{S02, PDF pp. 2--10, 20--32; Murphy, printed pp. 2--10, 13--16, 21--24 and 28--36.}
+\subsection{Robot, robotics and intelligent robot}
+\term{Robotics} studies machines that replace or assist humans in physical tasks and decision making. Its organizing idea is the \emph{intelligent connection of perception to action}: sensing is useful because it supports an action, and actions change what will be sensed next.
+
+A \term{robot} is a programmable physical mechanism with actuation and some capacity to execute intended tasks. The definition attributed to ISO 8373:2012 in the slides emphasizes an actuated mechanism, programming in two or more axes, a degree of autonomy, and movement within its environment. This is the definition cited by the course slides, not a claim about the current edition of the standard.
+
+An \term{intelligent robot} uses sensory information to select or modify its actions in response to its environment. A machine can be a robot while mainly repeating a preprogrammed sequence. Intelligence becomes especially useful when the relevant situation cannot be completely predicted beforehand.
+
+Murphy's working definition emphasizes a \emph{mechanical creature which can function autonomously}: it should adapt to reasonable changes in its environment or itself while pursuing its goal. This explains the emphasis on adaptation in AI robotics.
+
+The word \emph{robot} is linked to \emph{robota} and Karel \v{C}apek's play \emph{R.U.R.} The etymology explains the association with work; it does not define a robot's engineering capabilities.
+
+\key{Physical embodiment matters: a software agent may perceive and decide, but a robot must also deal with motion, contact, energy and the consequences of acting in the physical world.}
+
+\subsection{The fundamental elements}
+\par\smallskip\begin{tabularx}{\linewidth}{@{}L{27mm}YY@{}}
+\toprule
+Element & Function & Typical examples \\
+\midrule
+Sensors & Measure the robot or its environment. & Camera, range sensor, encoder, force sensor. \\
+Information processing & Convert measurements into useful information and decisions. & Perception, localization, planning, control. \\
+Actuators & Turn commands into physical action. & Wheel motor, manipulator joint, gripper. \\
+\bottomrule
+\end{tabularx}\par\smallskip
+
+The mechanical structure determines the motions and interactions that are physically possible. Electronics, mechanics, automation, computer science and telecommunications support different parts of the same system. Good planning cannot compensate for an actuator that cannot perform the requested motion; accurate motors cannot compensate for an incorrect interpretation of the scene.
+
+A \term{degree of freedom (DOF)} is an independent motion variable. A manipulator's joint motions determine its possible configurations; redundant degrees of freedom can provide different joint arrangements for the same task motion. \term{Kinematics} concerns geometrical motion relationships; \term{dynamics} concerns motion together with forces, masses and mechanical effects. These are introductory distinctions, not a complete kinematic model.
+
+A \term{teach pendant} lets an operator guide and record robot motions for later execution. A traditional \term{Automatic Guided Vehicle (AGV)} follows a designed route, such as a wire or marked trail. Stopping when that route is obstructed and autonomously finding another route are different capabilities.
+
+\subsection{A taxonomy with independent dimensions}
+The slide taxonomy should be read along several axes, rather than as a list of mutually exclusive robot types:
+\begin{itemize}
+\item \term{Physical capability:} mobile robots change their location; manipulation robots act on objects. A mobile manipulator does both.
+\item \term{Operating domain:} ground, marine, aerial or space.
+\item \term{Application:} industrial, agricultural, medical, field or service robotics.
+\item \term{Control allocation:} teleoperated, semi-autonomous or autonomous for a specified task.
+\end{itemize}
+For example, a rover can be a mobile space robot with autonomous obstacle avoidance and human-supervised mission goals. A robotic surgical system can be a medical manipulator operated by a human. The application or shape alone does not establish autonomy.
+
+\term{Field robotics} addresses work in challenging environments, often where human access is difficult or hazardous. \term{Service robotics} supports useful tasks in human environments. Both often need sensing and adaptation because their surroundings are less structured than a carefully engineered production cell.
+
+\subsection{Sense--Plan--Act}
+The three primitives describe functions, not necessarily three separate hardware devices:
+\begin{enumerate}
+\item \term{SENSE:} acquire measurements and extract information. Signal processing, computer vision and perception contribute here.
+\item \term{PLAN:} choose actions to achieve a goal using available information. Localization and mapping provide information needed by navigation and decision making; their exact placement depends on the architecture.
+\item \term{ACT:} execute the chosen action through motion control or manipulation.
+\end{enumerate}
+\begin{center}
+\fbox{Environment} $\longrightarrow$ \fbox{SENSE} $\longrightarrow$ \fbox{PLAN} $\longrightarrow$ \fbox{ACT}
+\end{center}
+The action changes the environment and the robot's state, so new observations close the loop. This diagram introduces the functions; it does not imply that every intelligent robot must wait for a complete planning cycle before responding to a nearby obstacle.
+
+\textbf{Example: delivering a package.} SENSE detects a corridor and an obstacle; PLAN selects a route to the delivery room; ACT commands the wheels. When the corridor becomes blocked, the robot must detect the change and adapt its behavior or route. Replaying the original wheel commands is insufficient.
+
+\begin{samepage}\subsection{Where artificial intelligence enters}
+Murphy groups AI contributions into seven areas. The useful distinction is the problem each area solves:
+\par\smallskip\begin{tabularx}{\linewidth}{@{}L{43mm}Y@{}}
+\toprule
+Area & Role in a robot \\
+\midrule
+Knowledge representation & Represent the world, the task and the robot's capabilities. \\
+Natural language understanding & Interpret a user's request and its context. \\
+Learning & Improve a model or behavior from experience. \\
+Planning and problem solving & Find actions that achieve a goal and revise failed solutions. \\
+Inference & Derive conclusions from available knowledge or incomplete observations. \\
+Search & Explore alternatives in a problem's search space. \\
+Vision & Extract task-relevant information from images. \\
+\bottomrule
+\end{tabularx}\par\smallskip\end{samepage}
+
+AI is broader than machine learning. A symbolic planner or a search algorithm is an AI technique even if it has no learning component. Likewise, \emph{search} may mean exploring possible action sequences rather than physically looking for an object.
+
+\subsection{Teleoperation, telepresence and supervisory control}
+\term{Teleoperation} places a human in the control loop at a distance. A local workstation provides displays and controls; the remote robot provides sensors, effectors, power and, where needed, mobility. A communication link carries observations and commands.
+
+This is useful when perception, dexterity or unusual decisions benefit from human judgment. Its limitations include restricted field of view, bandwidth, communication delay, cognitive fatigue and the demand for trained operators. A delayed image describes an earlier state; the corresponding command may arrive after the situation has changed.
+
+Murphy lists six conditions favoring teleoperation: the task is unstructured and nonrepetitive; the workspace cannot be engineered for conventional manipulation; some steps need dexterous hand--eye coordination; some need advanced recognition or situational awareness; display requirements fit the communication link; and trained operators are available. A \term{predictive display} can show a simulated command outcome before the delayed robot response arrives, but its prediction still depends on a suitable model.
+
+\term{Telepresence} improves the operator's experience of the remote environment through more natural sensory feedback and interaction. It concerns the interface and the sense of being present remotely; it does not itself give the robot more independent decision-making capability.
+
+\term{Semi-autonomous control}, also called \term{supervisory control} in Murphy, delegates parts of the task:
+\begin{itemize}
+\item \term{Continuous assistance / shared control:} the operator and robot share control, or the operator monitors a delegated action and can take over. Routine motion may be automated while delicate manipulation remains human-controlled.
+\item \term{Control trading:} the human initiates a task that the robot completes autonomously, then gives another command or interrupts it. This reduces continuous communication demands only if the robot can reliably handle the delegated task.
+\end{itemize}
+\key{Autonomy is task-dependent. A robot may act independently during navigation and still need a human for mission selection or difficult manipulation.}

@@ -1,0 +1,102 @@
+\section{Automation, autonomy and assumptions about the world}
+\sources{S04, PDF pp. 2--18; Murphy, printed pp. 13--16, 42--53.}
+\subsection{Automation versus autonomy}
+\term{Automation} performs highly repetitive, preplanned actions for a well-modeled task. Its success often depends on engineering the workspace so that the assumptions used to design the process remain valid.
+
+\term{Autonomy} allows a physically situated agent to select and adapt actions when relevant features of the environment or task are not fully known beforehand. It may generate plans, monitor execution, revise plans and learn. These are capabilities that can support autonomy, not a checklist that every autonomous system must implement identically.
+
+\term{Bounded rationality} means that an agent has limits: information, time, memory, computational resources and available actions. Robotic autonomy therefore means independent operation within a task and an operating scope, not unrestricted independence or moral agency.
+
+\par\smallskip\begin{tabularx}{\linewidth}{@{}L{27mm}YY@{}}
+\toprule
+Dimension & Automation emphasis & Autonomy emphasis \\
+\midrule
+Plans & Execute a prepared plan repeatedly. & Generate, monitor or revise plans as needed. \\
+Actions & Predictable outcomes under specified conditions. & Account for uncertain or changing outcomes. \\
+Models & A sufficiently complete model for the task. & Partial models updated through sensing. \\
+Representation & Signals and low-level control variables. & May also use symbols, goals and task descriptions. \\
+\bottomrule
+\end{tabularx}\par\smallskip
+
+The balance diagrams in S04 emphasize a \term{continuum}, with different balances for plans, actions, models and knowledge representation. A robot can generate task plans while executing some motions predictably; it can use a partial environment model together with precise signal-level control. Describe the capability being delegated, rather than assigning the whole robot to a single extreme.
+
+These are the teaching contrasts used in S04. Real robots combine them: an autonomous robot still uses low-level signal control, and an automated machine may contain sensors or symbolic decisions. Autonomy does not require planning at every instant or abandoning deterministic algorithms.
+
+\subsection{Closed World Assumption}
+Under the \term{Closed World Assumption (CWA)}, the stored model is treated as complete for the relevant domain. In its logical reading, a fact not represented as true is treated as false. In the engineering reading of the slides, all relevant objects, conditions and events are assumed to have been accounted for.
+
+\textbf{Example.} A symbolic database lists all obstacles in a work area. Under CWA, an obstacle not listed is treated as absent. This is useful only if the database is sufficiently complete and remains valid for that use.
+
+CWA makes reasoning simpler: a planner can evaluate a fixed set of states and actions. In a controlled workspace, the designer can constrain part positions, timing and disturbances, reducing the amount of external sensing required. This does not mean all automated robots are sensorless.
+
+\subsection{Open World Assumption}
+Under the \term{Open World Assumption (OWA)}, absence of knowledge is not proof of falsity. An unrecorded fact may be true or false: it is unknown from the available information. In robotics, operating in an open world means expecting relevant unknowns, incomplete models and changes that cannot all be enumerated in advance.
+
+\textbf{Example.} A corridor has no obstacle recorded in the map. This does not establish that it is currently clear: a person may have entered since the map was created. The robot must use current observations and update its decisions.
+
+An open world does not mean a robot has no model. It means that the model is partial and must be treated accordingly. Sensing, execution monitoring and adaptation connect the model to the actual situation.
+
+\key{CWA: ``not known true'' is treated as false. OWA: ``not known true'' remains unknown. For a robot, an old map is not sufficient evidence that a route is clear now.}
+
+\subsection{Do not confuse closed world with closed-loop control}
+\term{Closed-loop control} uses feedback to compare a desired value with a measured value and correct the action. For example,
+\[
+ e(t)=r(t)-y(t), \qquad u(t)=K_p e(t),
+\]
+where $r(t)$ is a desired position, $y(t)$ a measured position and $u(t)$ a control command. This is an illustrative proportional control law, not a complete robot controller.
+
+\term{Open-loop control} executes commands without using output feedback to correct that operation. Murphy also uses \term{ballistic control} for a trajectory computed and then executed without in-flight correction.
+
+The two distinctions concern different things. CWA concerns knowledge and the completeness of a model; feedback concerns how execution is corrected. An automated manipulator can use closed-loop joint control in a workspace modeled under CWA. It does not thereby acquire open-world task autonomy.
+
+\subsection{Greenfield and brownfield automation}
+\term{Greenfield automation} starts in a new setting. The designer can arrange layout and infrastructure around the planned system. \term{Brownfield automation} integrates automation into an existing facility, so legacy infrastructure and established processes constrain the design.
+
+This distinction concerns deployment conditions. It does not classify a robot as autonomous or automated. Both settings can contain a combination of automation and autonomous capabilities.
+
+\subsection{A toy planning problem and its hidden assumptions}
+In the \term{monkey and banana problem}, a simplified agent must move a box under a hanging banana, climb it and obtain the banana. A symbolic solution works because the problem description supplies suitable objects and actions.
+
+The real world adds questions: can the box support the agent? Is it movable? Does climbing succeed? Are there obstacles? A planner can produce a valid solution for its formal model while that solution fails physically because the model omits a relevant condition.
+
+\subsubsection{STRIPS: a compact illustration}
+\begin{samepage}Murphy introduces \term{STRIPS} to explain symbolic planning. Represent a state $S$ as a set of facts. An operator specifies \term{preconditions}, an \term{add list} and a \term{delete list}. If the preconditions hold, its modeled successor state is
+\[
+ S'=(S\setminus\operatorname{Delete}(a))\cup\operatorname{Add}(a).
+\]\par\end{samepage}
+
+For an illustrative \texttt{climb-box} operator:
+\begin{itemize}
+\item Preconditions: the agent is next to the box, is on the floor, and the box is climbable.
+\item Delete list: the agent is on the floor.
+\item Add list: the agent is on the box.
+\end{itemize}
+If \texttt{box-is-climbable} is omitted from the model and treated as irrelevant, the planned climb can fail. The formula describes the expected symbolic effect, not evidence that the action succeeded in the physical world. STRIPS is a planning method, not an entire robot architecture.
+
+\subsubsection{Means--ends analysis and a failed precondition}
+In Murphy's presentation, STRIPS uses \term{means--ends analysis (MEA)}: compare the current state with the \term{goal state}, use a \term{difference evaluator} to identify what is missing, and consult a \term{difference table} of operators and effects. A failed precondition becomes a \term{subgoal}; recursion solves that subgoal before returning to the original goal. Planning updates a copy of the world model before the physical execution.
+
+\textbf{Two-room example.} Initially the robot IT is in R1; door D1 connects R1 and R2 and is open. The goal is \texttt{INROOM(IT,R2)}.
+\begin{enumerate}
+\item \texttt{GOTHRUDOOR} can achieve the goal, but requires \texttt{NEXTTO(IT,D1)}. That fact is missing, so it becomes the subgoal.
+\item \texttt{GOTODOOR} requires the robot to be in the room connected by the door. Its conditions are satisfied; its add list supplies \texttt{NEXTTO(IT,D1)}.
+\item Return to \texttt{GOTHRUDOOR}. Its conditions now hold. Add \texttt{INROOM(IT,R2)} and delete \texttt{INROOM(IT,R1)} in the modeled state.
+\end{enumerate}
+The resulting execution order is \texttt{GOTODOOR}, then \texttt{GOTHRUDOOR}. This is a compact rendering of Murphy's example on pp. 46--52. It shows why simply naming an action that achieves a goal is insufficient: its preconditions must also be achieved.
+
+\subsection{The frame problem and world-model maintenance}
+The \term{frame problem} concerns representing the effects of an action while accounting for what remains unchanged, without explicitly enumerating every unaffected fact. When the agent climbs a box, its support relation changes; many other facts, such as another object's location, should persist.
+
+Murphy's discussion on printed p. 53 uses the term more broadly to emphasize the difficulty of maintaining a realistic, computationally tractable world model. Both readings expose the same design pressure: adding more facts and possible changes can make reasoning and maintenance unwieldy.
+
+CWA and the frame problem are related but distinct. CWA assumes that the relevant model is complete. The frame problem concerns how state changes and persistence are represented and maintained. Simply adding more details does not necessarily solve either issue efficiently.
+
+\subsection{Choosing how much autonomy to use}
+\begin{enumerate}
+\item Identify the task and the conditions that can be controlled or modeled.
+\item Identify changes that could invalidate the prepared plan.
+\item Decide which changes the robot can sense and respond to locally.
+\item Allocate uncertain or difficult decisions to a capable robot component or a human supervisor.
+\item Define when to revise the plan, request intervention or stop the operation.
+\end{enumerate}
+\textbf{Three cases.} Repeated welding with fixed fixtures favors automation. Delivery through changing corridors benefits from autonomous perception and route adaptation. An unfamiliar remote manipulation task may benefit from teleoperation with local assistance. The useful choice follows the task, rather than maximizing autonomy for its own sake.

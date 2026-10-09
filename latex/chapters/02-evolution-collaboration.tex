@@ -1,0 +1,59 @@
+\section{From industrial tools to collaborating agents}
+\sources{S03, PDF pp. 2--16, 21--27; S02, PDF pp. 30--32; Murphy, printed pp. 13--28.}
+\subsection{Two historical pressures}
+Murphy summarizes useful applications through the \term{three D's}: \term{dirty}, \term{dull} and \term{dangerous} work. These motivations include industrial repetition, hazardous handling and humanitarian tasks such as search and rescue. Adoption also involves economic, social and cultural factors. A \term{Luddite}, in the book's historical discussion, is associated with opposition to technological change; technical capability alone does not establish that people will accept an application.
+
+The early development of robotics followed two related needs. Numerical control and manufacturing pushed toward repeatable, programmable motion. Telemanipulation pushed toward performing physical work while separating the human from a dangerous workspace, particularly in nuclear applications.
+
+Murphy describes a fork between \term{industrial manipulators} and \term{AI robotics}. Manufacturing emphasized speed, precision and repeatability in engineered environments. Space exploration emphasized sensing and adaptation, since a rover could encounter terrain or events that had not been specified beforehand. These are different design priorities, rather than a permanent boundary between industrial and intelligent robots.
+
+\par\smallskip\begin{tabularx}{\linewidth}{@{}L{32mm}YY@{}}
+\toprule
+Milestone & Contribution & Concept to remember \\
+\midrule
+Telemanipulators & Remote handling with human control. & Separate the operator from the physical hazard. \\
+Unimate / Unimation & Programmable industrial manipulation. & Repeat physical work in a structured workspace. \\
+Dartmouth, 1956 & The term artificial intelligence, associated with John McCarthy. & Study computation for intelligent behavior. \\
+Shakey, 1966--72 & Integrated perception, world modeling and planning at SRI. & A mobile robot reasons about actions toward a goal. \\
+Collaborative robotics & Human and robot work in a shared environment and task. & Allocate responsibilities across both participants. \\
+\bottomrule
+\end{tabularx}\par\smallskip
+
+S03 dates the establishment of Unimation to 1956 and development of Unimate to 1959. The broad dates for Shakey follow S03. Murphy's illustration gives a narrower development interval. For revision, the important point is the integration of sensing, a world model and planning, rather than memorizing a single project date.
+
+\subsection{Industrial revolutions: the organizing idea}
+\begin{enumerate}
+\item \term{Industry 1.0:} mechanization through steam and other mechanical power sources.
+\item \term{Industry 2.0:} electrification, assembly lines and mass production.
+\item \term{Industry 3.0:} electronic control, computers and programmable automation, including PLCs.
+\item \term{Industry 4.0:} connected production systems in which machines, data and information technologies are integrated.
+\end{enumerate}
+The enabling technologies shown in S03 include \term{Big Data}, the \term{Internet of Things}, \term{robotic automation}, \term{cloud computing and cybersecurity}, \term{human--machine interfaces}, and \term{additive manufacturing}. Together they support connected observation, information exchange, production and interaction. Connectivity supplies information; the robot still needs a suitable decision and control architecture to use it.
+
+The dates in the slides are approximate teaching landmarks. The useful progression is from mechanizing an operation to automating it and then connecting it to a wider information system.
+
+\term{Industry 5.0}, as presented in S03, complements Industry 4.0 by emphasizing a \term{human-centric}, \term{sustainable} and \term{resilient} industry. Productivity is part of the design problem, alongside worker wellbeing, environmental limits and the ability to cope with disruptions.
+
+\subsection{Collaborative robotics and shared intelligence}
+In \term{collaborative robotics}, humans and robots share an environment and collaborate on tasks. S03 highlights potentially reduced cost and footprint as reasons for interest from \term{small and medium-sized enterprises (SMEs)}. The system should combine the robot's repeatability and physical capability with human judgment, flexibility and task knowledge.
+
+The slides ask: \emph{Where is the intelligence located? Should the robot execute commands or interpret them?} The \term{shared-intelligence approach} answers by distributing useful capabilities across the human and the robot. A command can specify a goal while leaving some execution decisions to the robot.
+
+\textbf{Example: assisted assembly.} The human selects and aligns a component. The robot holds it or executes a repetitive motion. Sensors provide information about contact or task progress, and the robot adjusts the execution. Designing the combined task requires deciding who chooses the next step, who monitors success, and how an intervention is handled.
+
+Three terms must remain distinct:
+\begin{itemize}
+\item \term{Collaborative robotics:} a human--robot work arrangement.
+\item \term{Shared control:} an allocation of control authority between human and robot.
+\item \term{Hybrid deliberative/reactive architecture:} an internal organization combining planning and reactive behaviors.
+\end{itemize}
+A collaborative robot can use a hybrid architecture, but the two expressions describe different aspects of the system.
+
+\subsection{What the illustrations are meant to show}
+The contrast between a \term{dark factory} and a collaborative workspace introduces a design choice: production can aim to remove people from particular operations or to integrate human and robot contributions. Neither diagram alone predicts the effect on employment.
+
+S03 contrasts traditional fenced industrial cells with collaborative applications. The conceptual point is closer interaction. Whether protective separation can be removed depends on the complete application, including the tool, workpiece, motion and protective measures. Treat the slide's ``no fences'' wording as an illustration of a possible arrangement, rather than a universal property of every collaborative robot.
+
+The humanoid examples illustrate interest in machines that can operate in spaces and with tools designed for people. They also highlight unresolved practical constraints: manipulation capability, training, maintenance and economic viability. Human-like appearance does not establish autonomous competence. The same distinction applies to personal robots and androids shown in S02.
+
+\key{Robot form, collaboration and autonomy answer different questions: what the machine is built like, how it works with people, and which decisions it can make for a specified task.}

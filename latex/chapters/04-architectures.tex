@@ -1,0 +1,115 @@
+\section{Organizing intelligence: robot paradigms and architectures}
+\sources{S04, PDF pp. 19--30; S02, PDF pp. 24--32; Murphy, printed pp. 2--11, 42--43, 54--62 and 83--91.}
+\subsection{Paradigm versus architecture}
+A \term{paradigm} describes how SENSE, PLAN and ACT relate and how sensing is organized. An \term{architecture} implements those principles through concrete components, interfaces and control flows. The same paradigm can have several architectures.
+
+The brain diagrams in S04 are organizing analogies: goal-oriented deliberation is contrasted with fast reflex-like responses, with an interface between them. They do not establish that the software has human consciousness or exactly reproduces neuroanatomy.
+
+\subsection{The Hierarchical Paradigm}
+The \term{Hierarchical Paradigm} follows
+\[
+ \text{SENSE}\longrightarrow\text{PLAN}\longrightarrow\text{ACT}.
+\]
+Sensing builds or updates a \term{world model}; planning uses that model to select actions; execution carries out the resulting directives. In the classical organization, sensing is \term{monolithic}: observations are fused into a shared global representation.
+
+The world model can contain an a priori map, current observations, an estimate of the robot's state and task knowledge. It is broader than a geometric map. For delivery, it may also encode the room receiving a package and the conditions required for delivery.
+
+\textbf{Strength.} Explicit representations support goal reasoning, action sequences and the explanation of why a plan achieves a goal.
+
+\textbf{Limitation.} Model building and planning take time. While the robot reasons, the environment can change. Errors or omissions in the model can invalidate a seemingly correct plan. A repeated Sense--Plan--Act cycle can update the model, but its latency still matters.
+
+\subsubsection{NHC and NIST RCS: what the components do}
+Murphy's \term{Nested Hierarchical Controller (NHC)} separates planning into a \term{Mission Planner} (translate a mission into a goal), \term{Navigator} (select a path and waypoints), and \term{Pilot} (select actions for the current path segment). A low-level controller converts directives into actuator commands. All use the relevant world-model information.
+
+NHC interleaves planning and execution: the Pilot monitors progress; reaching a waypoint advances the path, while an obstruction returns control to the Navigator for replanning. Every sensor update need not restart mission planning. Its decomposition is particularly natural for navigation, and less directly applicable to manipulation.
+
+Murphy's account of \term{NIST Real-time Control System (RCS)} includes \term{Sensory Perception} for preprocessing, \term{World Modeling} with a \term{Knowledge Database}, \term{Value Judgment} for evaluating plans, and \term{Behavior Generation} for executable commands. \term{NASREM} adapts this organization to space teleoperation. These descriptions concern the historical architectures in the supplied edition.
+
+Evaluating a plan through simulation can expose failures represented in the model, but adds latency and cannot compensate for every omitted real-world condition. Hierarchical execution must also handle \term{sensor noise}, \term{actuator errors}, semantic uncertainty (what counts as ``next to''?) and \term{action completion}: issuing a grasp command does not establish that the object was grasped.
+
+\subsection{The Reactive Paradigm}
+The \term{Reactive Paradigm} directly couples sensing and acting:
+\[
+ \text{SENSE}\longrightarrow\text{ACT}.
+\]
+A \term{behavior} is a task-relevant perception--action coupling, such as avoiding obstacles or moving toward a visible goal. Multiple behaviors can run concurrently. Each uses the information needed for its function, rather than waiting for a complete global description of the scene.
+
+\textbf{Example.} A move-toward-goal behavior proposes forward motion; an avoid-obstacle behavior proposes a turn. The final action depends on a coordination mechanism, such as arbitration or an appropriate combination. Without coordination, two behaviors can issue incompatible commands.
+
+\term{Emergent behavior} describes a system-level result produced by interactions among simpler behaviors. A curved path around an obstacle may emerge even when neither behavior individually specifies that exact path. Emergence is not a guarantee of success: the coordination mechanism must still suit the task.
+
+\textbf{Strength.} Short perception--action paths can respond quickly and reduce dependence on a complete world model.
+
+\textbf{Limitation.} Purely local responses may be insufficient for tasks requiring memory, long-term ordering or a route that initially moves away from a goal. Eliminating explicit planning does not eliminate every difficult decision.
+
+\key{Reactive does not mean random or sensorless. It means that action is closely coupled to task-relevant perception, without requiring a deliberative planning stage for each response.}
+
+\subsection{Perception for action and perception for recognition}
+The distinction between two perceptual functions explains why the same robot may need both reactive and deliberative processing.
+
+\term{Direct perception} extracts action-relevant information without first constructing a complete symbolic interpretation. A robot may detect that something is approaching and respond before deciding precisely what object it is.
+
+An \term{affordance} is a perceivable possibility for action offered by the environment relative to an agent's capabilities. An opening affords passage only if the robot can fit through it. A surface may afford support only for an agent of suitable size and weight. Affordances link perception to what the agent can do.
+
+\term{Recognition} identifies objects or specific instances using models, memory or interpretation. Avoiding a nearby object may require only its position; delivering \emph{this user's cup} requires distinguishing it from other cups. The correct processing depends on what the task needs.
+
+Murphy uses Gibson's ecological approach for affordances and Neisser's distinction between direct perception and recognition. Direct perception is an organizing ideal; its robotic implementation can still require substantial signal or image processing. The absence of symbolic recognition does not make extracting the needed information free.
+
+\subsection{The Hybrid Deliberative/Reactive Paradigm}
+The \term{Hybrid Deliberative/Reactive Paradigm} combines goal reasoning with fast behaviors. Its characteristic organization is
+\[
+ \text{PLAN},\quad \text{SENSE--ACT}.
+\]
+The comma matters: planning chooses or configures suitable behaviors, which then execute through perception--action loops. Planning is revisited when a subtask completes, the situation changes or execution fails. The reactive layer need not wait for a full new mission plan before responding to an immediate condition.
+
+\par\smallskip\begin{tabularx}{\linewidth}{@{}L{37mm}YY@{}}
+\toprule
+Component & Main responsibility & Typical information \\
+\midrule
+Deliberative layer & Select goals, decompose tasks and plan. & World model, history, task constraints. \\
+Interfacing layer & Connect plans to executable behaviors and return status. & Behavior parameters, progress, failure reports. \\
+Reactive / behavioral layer & Execute skills and respond to current conditions. & Current task-relevant sensor information. \\
+\bottomrule
+\end{tabularx}\par\smallskip
+
+The two decision loops operate on different \term{time horizons}. Reactive control focuses on the immediate present. Deliberation may use the past, predict future consequences and compare alternatives. Sensing can feed both local behaviors and the model used by the planner.
+
+\textbf{Example: corridor blocked during delivery.}
+\begin{enumerate}
+\item The deliberative layer selects a route and activates corridor-following behaviors.
+\item The reactive layer responds immediately to a detected obstruction.
+\item The interface reports that the route cannot be executed as expected.
+\item The world model is updated and the planner chooses another route or requests assistance.
+\end{enumerate}
+A local response buys time; deliberation resolves the broader task consequence.
+
+\subsection{Why the interface is difficult}
+A measurement and a symbolic fact are different representations. A range observation may support ``obstacle ahead,'' but it may not establish ``door permanently blocked.'' The interface must communicate appropriate information about observations, task progress and failures.
+
+The world model must contain enough information for useful decisions while remaining tractable. Maintaining all details at all times is expensive and can slow the very decisions needed for adaptation. Conversely, discarding all history makes some tasks impossible.
+
+Interaction adds another requirement. The robot may need to represent another agent's \term{beliefs, desires and intentions (BDI)} and establish \term{common ground}: a shared understanding of the task and what a command means. ``Bring the cup'' needs agreement about which cup and where it should go. These are additional representation problems, not automatic consequences of having a planner.
+
+\subsection{The three paradigms compared}
+\par\smallskip\begin{tabularx}{\linewidth}{@{}L{24mm}YYY@{}}
+\toprule
+Feature & Hierarchical & Reactive & Hybrid \\
+\midrule
+Organization & Sense--Plan--Act. & Concurrent Sense--Act behaviors. & Plan plus Sense--Act execution. \\
+Sensing & Shared global model. & Local, behavior-specific information. & Both local inputs and a bounded shared model. \\
+Main benefit & Explicit goal reasoning. & Fast responses. & Long-term goals with immediate adaptation. \\
+Main challenge & Model accuracy and planning latency. & Coordination and limited long-term reasoning. & Layer interfaces and consistent execution status. \\
+\bottomrule
+\end{tabularx}\par\smallskip
+
+\key{A hybrid architecture combines complementary capabilities. It still needs suitable models, behaviors and interfaces; the word ``hybrid'' alone does not establish robustness.}
+
+\subsection{Evaluating an architecture}
+Murphy's four criteria provide a practical vocabulary for comparing implementations:
+\begin{enumerate}
+\item \term{Support for modularity:} are responsibilities and interfaces clear enough to maintain and reuse components?
+\item \term{Niche targetability:} does the architecture fit its intended task and environment?
+\item \term{Ease of portability to other domains:} how readily can it transfer to different tasks or robot platforms?
+\item \term{Robustness:} where is it vulnerable, and how are those vulnerabilities addressed?
+\end{enumerate}
+Niche targetability and portability can conflict: a specialized solution may fit one task well while being difficult to reuse. Likewise, dividing a diagram into boxes is not enough to guarantee reusable code. Apply the criteria to concrete components and failure cases.
